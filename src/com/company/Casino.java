@@ -5,8 +5,11 @@ import java.util.Scanner;
 
 
 public class Casino extends Location {
-    public Casino(String inName, String inAddress, String inDescription, int inTaxiCost) {
-        super(inName, inAddress, inDescription, inTaxiCost);
+    public Casino(){
+    name = "Ceasar Palace";
+    address = "Las Vegas Blvd";
+    description = "Here you can win some dollars back";
+    taxiCost = 45;
 
     }
 

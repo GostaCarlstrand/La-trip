@@ -8,7 +8,7 @@ public class Character {
     int age;
     int walletBalance;
     String [] hats = {"Top Hat", "Cap", "Fedora", "Strawhat"};
-    String choiceOfHat;
+    public String choiceOfHat;
 
     public String characterInput() {                     // A function where player inputs their character values
         boolean running = true;

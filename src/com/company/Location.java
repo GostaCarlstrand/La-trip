@@ -7,20 +7,11 @@ import java.util.Scanner;
 
 public class Location {
 
-    private String name;                        //Name of the location
-    private String address;                     //An address to the location
-    private String description;                 //A description to the location
-    private int taxiCost;                       //What the taxi trip costs
+    protected String name;                        //Name of the location
+    protected String address;                     //An address to the location
+    protected String description;                 //A description to the location
+    protected int taxiCost;                       //What the taxi trip costs
     public String currentLocation;
-
-
-    public Location(String inName,String inAddress,String inDescription,int inTaxiCost) {
-        //Variables that needs to be declared when the object is created
-        name = inName;
-        address = inAddress;
-        description = inDescription;
-        taxiCost = inTaxiCost;
-    }
 
     public String getName() {return name;}                  // A public function to get the name of the location
     public String getAddress() {return address;}            // A public function to get the address of the location
@@ -50,7 +41,7 @@ public class Location {
                  }
 
                  if (currentLocation.equalsIgnoreCase("Airport")) {
-                     System.out.println("Airport");
+                     System.out.println("Going to the airport");
                      break;
                  }
                  if (menuChoice.length() <= 0 || flag == 0) {
@@ -66,14 +57,9 @@ public class Location {
 
      }
 
+     public void welcomeToLocation(String inName, String inDescription) {
+         System.out.println("We have now arrived to " + inName);
+         System.out.println(inDescription);
 
-
-    public void goingToMsg(String inLocation) {
-        System.out.println("Going to " + inLocation + "...........");
-     }
-
-     public void welcomeToLocation(String inLocation) {
-         System.out.println("Hi and welcome to " + name);
-         System.out.println(name + " ," + description);
      }
 }
