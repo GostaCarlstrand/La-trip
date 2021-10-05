@@ -39,10 +39,6 @@ public class Character {
         return choiceOfHat;
     }
 
-    public int updatedWalletBalance(int inWalletBalance) {
-        walletBalance -= inWalletBalance;
-        return walletBalance;
-    }
 
 }
 

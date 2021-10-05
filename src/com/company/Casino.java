@@ -10,8 +10,16 @@ public class Casino extends Location {
     address = "Las Vegas Blvd";
     description = "Here you can win some dollars back";
     taxiCost = 45;
+    String[] casinoActivitiesList = {"Play Dice", "Black Jack"};
 
     }
+
+
+    public String [] getCasinoActivitiesList() {
+        String[] casinoActivitiesList = {"Play Dice", "Black Jack"};
+        return casinoActivitiesList;
+    }
+
 
     public void playDice () {
         boolean running = true;

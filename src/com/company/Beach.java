@@ -13,6 +13,7 @@ public class Beach extends Location{
         description = "A beautiful beach";
         taxiCost = 50;
         int temperature;
+        String [] activities = {"Take a swim", "Go for a walk", "Leave"};
 
     }
 
@@ -78,6 +79,11 @@ public class Beach extends Location{
         Random random = new Random();
         temperature = random.nextInt(18,26);
         return temperature;
+    }
+
+    public void newLongBeachActivities() {
+
+
     }
 
 }
