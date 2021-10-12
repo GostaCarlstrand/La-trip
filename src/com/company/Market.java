@@ -1,13 +1,9 @@
 package com.company;
 
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Scanner;
+import java.util.*;
 
 public class Market extends Location {
     public Market(String inName, String inAddress) {
-        super();
-
         name = inName;
         address = inAddress;
         description = "The market offers a variety of different products, just be prepared to bargain";
@@ -26,6 +22,9 @@ public class Market extends Location {
             switch (menuChoice) {
                 case 0:                                     //1 index of the marketActivitiesList
                     welcometoAlsFruit();
+                    fruitPrice();
+
+
                     break;
 
                 default:
@@ -39,18 +38,34 @@ public class Market extends Location {
         System.out.println("Hi, and welcome to Al's Fruit \n" +
                 "what can I get you?: ");
         Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
     }
 
 
     public void fruitPrice() {
-        Hashtable<String, String> fruitPrice = new Hashtable<String, String>();
-        fruitPrice.put("Apple", "10");
-        fruitPrice.put("Pear", "20");
-        System.out.println(fruitPrice);
+        ArrayList <String> shoppingCart;
+        ArrayList <Integer> shoppingCartSum;
+        Hashtable<String, Integer> fruitPrice = new Hashtable<String, Integer>();
+        fruitPrice.put("Apple", 3);
+        fruitPrice.put("Pear", 4);
+        fruitPrice.put("Watermelon", 7);
+        for (String i : fruitPrice.keySet())
+            System.out.print(i + " : " + fruitPrice.get(i) + " dollars / kg\n");
+
+        Scanner input = new Scanner(System.in);
+        String menuChoice = input.nextLine().toUpperCase(Locale.ROOT);
+        displayFruits();
+        switch (menuChoice) {
+            case ("APPLE"):
+
+
+
+        }
+
     }
 
+    public void displayFruits () {
 
+    }
 
 }
 
