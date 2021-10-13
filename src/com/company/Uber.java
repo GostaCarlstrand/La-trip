@@ -1,21 +1,38 @@
 package com.company;
 
+import com.company.product.*;
+
+import java.io.IOException;
 import java.util.*;
 
 public class Uber {
     String currentUberLocation;
+    Character character;
+    Beach longBeach;
+    Casino ceasar;
+    Location airport;
+    Market market;
+    Product product;
+    Menu menu;
+    Apple apple;
+
+    public void initGame () {
+        menu = new Menu(market);
+        product = new Product();
+        character = new Character();
+        longBeach = new Beach();
+        ceasar = new Casino();
+        airport = new Airport();
+        market = new Market(menu);
+
+    }
 
     public void gameLoop() {
-        Character character = new Character();              //Creating our character object
-        Beach longBeach = new Beach();
-        Casino ceasar = new Casino();
-        Location airport = new Airport();
-        Market market = new Market("Market", "Apple Rd");
 
 
-        String [] avalibleLocations = {ceasar.getName(),
+
+        String [] availableLocations = {ceasar.getName(),
                 airport.getName(), market.getName(), longBeach.getName()};
-
 
         // A function where inputs needs to be made on the console. This will be saved in character variables
         //character.characterInput();
@@ -25,7 +42,7 @@ public class Uber {
 
         while (gameRunning) {
             // A function where the input can be entered. Input must match on the locations in the uberLocation list
-            currentUberLocation = Location.selectALocation(avalibleLocations);
+            currentUberLocation = menu.locationMenu(availableLocations);
 
             try {
             switch (currentUberLocation) {
@@ -42,19 +59,14 @@ public class Uber {
                     break;
                 case "market":
                     Location.welcomeToLocation(market.name, market.description);
-                    market.marketSwitch(Location.selectLocationActivity(market.activities));
-
-
-
+                    market.marketActivities(menu.chooseLocationActivity(market.activities));
                     break;
-
             }
-
                 //gameRunning = false;
         } catch (NullPointerException e) {
-                e.printStackTrace();
-
+                System.out.println("Enter a valid location");;
             }
+
 
 
 
