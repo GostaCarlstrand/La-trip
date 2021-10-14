@@ -2,29 +2,38 @@ package com.company;
 import com.company.product.*;
 
 import java.awt.List;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.NumberFormat;
 import java.util.*;
 
 public class Market extends Location {
         Menu menu;
+        Receipt receipt;
         Watermelon watermelon = new Watermelon();
         Pear pear = new Pear();
         Apple apple = new Apple();
-        Product [] productInStock = {watermelon, pear, apple};
+        Banana banana = new Banana();
+        Kiwi kiwi = new Kiwi();
+        Potato potato = new Potato();
+        Product [] productInStock = {watermelon, pear, apple, banana, kiwi, potato};
         ArrayList <String> shoppingCart = new ArrayList<>();
         ArrayList <Integer> shoppingCartPrice = new ArrayList<>();
         ArrayList <Product> productCart = new ArrayList<Product>();
+        String brandName = "Al's Fruit";
 
 
 
-
-    public Market(Menu menu) {
+    public Market(Menu menu, Receipt receipt) {
         name = "Market";
         address = "Apple Rd";
         description = "The market offers a variety of different products, just be prepared to bargain";
         taxiCost = 45;
         activities = new String[]{"Fruit", "Frank's shoes"};
         this.menu = menu;
+        this.receipt = receipt;
 
     }
 
@@ -58,7 +67,7 @@ public class Market extends Location {
     }
 
     private void welcometoAlsFruit(){
-        System.out.println("Hi, and welcome to Al's Fruit \n" +
+        System.out.println("Hi, and welcome to Al's Fruit + \n" +
                 "what can I get you?: \n" +
                 "1. Leave store \n" +
                 "2. Remove any product \n" +
@@ -114,6 +123,8 @@ public class Market extends Location {
                 } else if (menuChoice.equalsIgnoreCase("4")) {
                     int totalSum = calculatePrice(productCart);
                     System.out.println("That will be: " + totalSum);
+                    createReceipt();
+                    writeReceipt();
                     break;
                 }
 
@@ -152,6 +163,57 @@ public class Market extends Location {
             }
         }
     }
+    public void createReceipt() {
+        try {
+            File file = new File("receipt.txt");
+            if (file.createNewFile()) {
+                System.out.println("A receipt has been printed to you");
+            }
+        } catch (IOException e) {
+            System.out.println("Could not create a file");
+            e.printStackTrace();
+        }
+    }
+
+    private String displayProductReceipt(ArrayList<Product> productCart) {
+        String products = "";
+        for (int i = 0; i < productCart.size(); i++) {
+            products += "\n - " + productCart.get(i).getName();
+
+        }
+        return products;
+    }
+
+    private String displayPriceReceipt(ArrayList<Product> productCart) {
+        String pricePerProduct = "";
+        for (int i = 0; i < productCart.size(); i++) {
+            pricePerProduct += "\n - " + productCart.get(i).getPrice();
+
+        }
+        return pricePerProduct;
+    }
+
+
+
+    public void writeReceipt() {
+        try {
+            FileWriter fileWriter = new FileWriter("receipt.txt");
+            fileWriter.write(("-----------------Thanks for shopping at " + brandName + "-----------------"));
+            fileWriter.write(displayProductReceipt(productCart));
+            fileWriter.write("\n-------------------------------------------------------------------\n");
+            String sum = String.valueOf(calculatePrice(productCart));       //int
+            String sumVAT = String.valueOf(calculatePrice(productCart)*0.12D); //double
+            fileWriter.write("Total price will be: " + sum + " dollars \n");
+            fileWriter.write("VAT 12%: " + sumVAT);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Could not write to file");
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
 }

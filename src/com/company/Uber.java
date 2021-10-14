@@ -14,7 +14,8 @@ public class Uber {
     Market market;
     Product product;
     Menu menu;
-    Apple apple;
+    Receipt receipt;
+
 
     public void initGame () {
         menu = new Menu(market);
@@ -23,14 +24,13 @@ public class Uber {
         longBeach = new Beach();
         ceasar = new Casino();
         airport = new Airport();
-        market = new Market(menu);
+        market = new Market(menu, receipt);
+        receipt = new Receipt(market, product);
+
 
     }
 
     public void gameLoop() {
-
-
-
 
         String [] availableLocations = {ceasar.getName(),
                 airport.getName(), market.getName(), longBeach.getName()};

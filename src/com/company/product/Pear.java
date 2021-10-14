@@ -8,9 +8,4 @@ public class Pear extends Product{
         price = 3;      //price per kg
     }
 
-    public int calculatePricePear(int weight) {
-        int totalSum = this.price * weight;
-        return totalSum;
-    }
-
 }
