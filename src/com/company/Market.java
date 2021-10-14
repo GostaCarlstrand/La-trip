@@ -1,6 +1,8 @@
 package com.company;
 import com.company.product.*;
 
+import java.awt.List;
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Market extends Location {
@@ -11,6 +13,10 @@ public class Market extends Location {
         Product [] productInStock = {watermelon, pear, apple};
         ArrayList <String> shoppingCart = new ArrayList<>();
         ArrayList <Integer> shoppingCartPrice = new ArrayList<>();
+        ArrayList <Product> productCart = new ArrayList<Product>();
+
+
+
 
     public Market(Menu menu) {
         name = "Market";
@@ -25,6 +31,15 @@ public class Market extends Location {
 
 
     public void marketActivities (int menuChoice) {
+
+        productCart.add(apple);
+        productCart.add(apple);
+        System.out.println(productCart.size());
+        productCart.remove(1);
+        System.out.println(productCart.size());
+        System.out.println(productCart.get(0).getName());
+
+
         boolean running = true;
 
 
@@ -85,7 +100,11 @@ public class Market extends Location {
                     running = false;                                // Leave store
                     break;
                 } else if (menuChoice.equalsIgnoreCase("2")) {       //Remove any of the objects
-                    removeProductsFromCart();
+                    if (!(shoppingCart.isEmpty())){
+                        removeProductsFromCart();
+                    } else {
+                        System.out.println("Your cart does not contain any products");
+                    }
                 } else if (menuChoice.equalsIgnoreCase("3")) {       // Remove all objects in shopping cart
                     shoppingCart.clear();
                     shoppingCartPrice.clear();
@@ -100,41 +119,30 @@ public class Market extends Location {
                 displayCart();
             }
 
-
-
-
             }
-
     }
-
     public void removeProductsFromCart () {     //Test to remove until list is empty
     boolean running = true;
-       while (running) {
-          System.out.println("This is your current cart: " + shoppingCart.toString());
-          System.out.print("What product would you like to remove?: ");
-          String menuChoice = menu.menuInput();
-          for (int i = 0; i < productInStock.length; i++) {
-              if (menuChoice.equalsIgnoreCase(productInStock[i].getName())) {
-                  shoppingCart.remove(productInStock[i].getName());
-                  shoppingCartPrice.remove(productInStock[i].getPrice());
-              } else if (menuChoice.equalsIgnoreCase("1")){
-                  running = false;
-                  break;
-              } else {
-                  System.out.println("The cart does not contain that product");
-              }
-
-          }
-
+          System.out.println("Here you can enter the products that you would like to remove,\n" +
+                  "Type return to continue shopping");
+        while (running || !shoppingCart.isEmpty()) {
+            System.out.println("This is your current cart: " + shoppingCart.toString());
+            System.out.print("What product would you like to remove?: ");
+            String menuChoice = menu.menuInput();
+            boolean thisMessageHasBeenPrinted = false;
+                for (int i = 0; i <= shoppingCart.size(); i++) {
+                    if (menuChoice.equalsIgnoreCase(shoppingCart.get(i))) {
+                        shoppingCart.remove(shoppingCart.get(i));
+                        shoppingCartPrice.remove(shoppingCartPrice.get(i));
+                        break;
+                    } else if (menuChoice.equalsIgnoreCase("return")) {
+                        running = false;
+                        break;
+                    } else if (!thisMessageHasBeenPrinted) {
+                        System.out.println("The cart does not contain that product");
+                        thisMessageHasBeenPrinted = true;
+                    }
+                }
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-    }
-}

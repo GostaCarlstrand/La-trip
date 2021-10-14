@@ -28,6 +28,7 @@ public class Uber {
     }
 
     public void gameLoop() {
+        market.marketActivities(0);
 
 
 
