@@ -1,5 +1,6 @@
 package com.company.product;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Product {
@@ -11,10 +12,15 @@ public class Product {
     public int getPrice() {return price;}
     public double getWeight() {return weight;}
 
-    public void setWeight() {
-        Random random = new Random();
-        int differenceNumber = random.nextInt(1,2);
-        this.weight =+ differenceNumber;
+
+
+    @Override
+    public String toString() {
+        String name = getName();
+        return name;
     }
+
+
+
 
 }

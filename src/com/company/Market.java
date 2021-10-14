@@ -31,15 +31,6 @@ public class Market extends Location {
 
 
     public void marketActivities (int menuChoice) {
-
-        productCart.add(apple);
-        productCart.add(apple);
-        System.out.println(productCart.size());
-        productCart.remove(1);
-        System.out.println(productCart.size());
-        System.out.println(productCart.get(0).getName());
-
-
         boolean running = true;
 
 
@@ -71,7 +62,8 @@ public class Market extends Location {
                 "what can I get you?: \n" +
                 "1. Leave store \n" +
                 "2. Remove any product \n" +
-                "3. Remove all objects"
+                "3. Remove all objects \n" +
+                "4. Go to cashier"
         );
     }
 
@@ -83,10 +75,19 @@ public class Market extends Location {
 
     }
 
-    private void displayCart() {
-        System.out.println("You have added the following products to your cart: " + shoppingCart.toString());
-        System.out.println("Your price: " + shoppingCartPrice.toString());
+    private String displayCart() {
+        String displayCart = productCart.toString().replace("[", "").replace("]", "");
+        return displayCart;
     }
+
+    public int calculatePrice(ArrayList <Product> productCart) {
+        int totalSum = 0;
+        for (Product i : productCart) {
+            totalSum = totalSum + (i).getPrice();
+        }
+        return totalSum;
+    }
+
 
     private void addProductToCart() {       //Test could be to add ''another'' product if it is already in list
         boolean running = true;
@@ -94,55 +95,63 @@ public class Market extends Location {
             String menuChoice = menu.menuInput();
             for (int i = 0; i < productInStock.length; i++) {
                 if (menuChoice.equalsIgnoreCase(productInStock[i].getName())) {
-                    shoppingCart.add(productInStock[i].getName());
-                    shoppingCartPrice.add(productInStock[i].getPrice());
+                    productCart.add(productInStock[i]);
                 } else if (menuChoice.equalsIgnoreCase("1")) {
                     running = false;                                // Leave store
                     break;
                 } else if (menuChoice.equalsIgnoreCase("2")) {       //Remove any of the objects
-                    if (!(shoppingCart.isEmpty())){
+                    if (!(productCart.isEmpty())) {
                         removeProductsFromCart();
+                        break;
                     } else {
                         System.out.println("Your cart does not contain any products");
+                        break;
                     }
                 } else if (menuChoice.equalsIgnoreCase("3")) {       // Remove all objects in shopping cart
-                    shoppingCart.clear();
-                    shoppingCartPrice.clear();
+                    productCart.clear();
                     System.out.println("Your cart is now empty");
                     break;
-                    }
-
+                } else if (menuChoice.equalsIgnoreCase("4")) {
+                    int totalSum = calculatePrice(productCart);
+                    System.out.println("That will be: " + totalSum);
+                    break;
                 }
-            if ((shoppingCart.isEmpty() && shoppingCartPrice.isEmpty())) {
+
+
+            }
+            if ((productCart.isEmpty())) {
                 displayFruits();
             } else {
-                displayCart();
+                System.out.println("Product in your cart: " + displayCart());
             }
 
-            }
+        }
     }
-    public void removeProductsFromCart () {     //Test to remove until list is empty
-    boolean running = true;
-          System.out.println("Here you can enter the products that you would like to remove,\n" +
-                  "Type return to continue shopping");
-        while (running || !shoppingCart.isEmpty()) {
-            System.out.println("This is your current cart: " + shoppingCart.toString());
+
+    private void removeProductsFromCart () {
+        boolean running = true;
+        System.out.println("Here you can enter the products that you would like to remove,\n" +
+                "Type return to continue shopping");
+        while (running) {
+            System.out.println(productCart.size());
+            System.out.println("This is your current cart: " + displayCart());
             System.out.print("What product would you like to remove?: ");
             String menuChoice = menu.menuInput();
-            boolean thisMessageHasBeenPrinted = false;
-                for (int i = 0; i <= shoppingCart.size(); i++) {
-                    if (menuChoice.equalsIgnoreCase(shoppingCart.get(i))) {
-                        shoppingCart.remove(shoppingCart.get(i));
-                        shoppingCartPrice.remove(shoppingCartPrice.get(i));
-                        break;
-                    } else if (menuChoice.equalsIgnoreCase("return")) {
-                        running = false;
-                        break;
-                    } else if (!thisMessageHasBeenPrinted) {
-                        System.out.println("The cart does not contain that product");
-                        thisMessageHasBeenPrinted = true;
-                    }
+            for (int i = 0; i <= productCart.size(); i++) {
+                if (menuChoice.equalsIgnoreCase(productCart.get(i).getName())) {
+                    productCart.remove(productCart.get(i));
+                    break;
+                } else if (menuChoice.equalsIgnoreCase("return")) {
+                    running = false;
+                    break;
                 }
+            }
+            if (productCart.isEmpty()) {
+                running = false;
+                break;
             }
         }
     }
+
+
+}
