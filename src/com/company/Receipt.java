@@ -15,7 +15,7 @@ public class Receipt {
     public Receipt(Market market, Product product) {
         this.market = market;
         this.product = product;
-        file = new File("receipt.txt");
+        //file = new File("receipt.txt");
 
     }
 

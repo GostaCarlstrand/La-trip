@@ -1,9 +1,11 @@
 package com.company;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Menu {
     Market market;
+    Random random = new Random();
 
     public Menu (Market market) {
         this.market = market;
@@ -41,7 +43,21 @@ public class Menu {
         return menuInteger;
     }
 
+    public String generateRandomGreeting() {
+        String [] greetings = {"Hello there ", "Hi, ", "Hi my friend, ", "Yo bud, ", "!Hola amigo¡ ", "Howdy partner, "};
+        int randomIndexNumber = random.nextInt(greetings.length);
+        return greetings[randomIndexNumber];
+    }
 
+    public void welcomeToVenueMessage (String brandName) {
+        System.out.println(generateRandomGreeting() + "and welcome to " +  brandName + "\n" +
+                "what can I get you?: \n" +
+                "1. Leave store \n" +
+                "2. Remove any product \n" +
+                "3. Remove all objects \n" +
+                "4. Go to cashier"
+        );
+    }
 
 }
 

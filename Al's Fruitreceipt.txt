@@ -1,0 +1,10 @@
+-----------------Thanks for shopping at Al's Fruit-----------------
+ * Watermelon- 7 $ 
+ * Watermelon- 7 $ 
+ * Apple- 2 $ 
+ * Apple- 2 $ 
+ * Apple- 2 $ 
+ * Pear- 3 $ 
+-------------------------------------------------------------------
+Total price will be: 23 dollars 
+VAT 12%: 2.76
