@@ -15,6 +15,7 @@ public class Uber {
     Product product;
     Menu menu;
     Receipt receipt;
+    Purchase purchase;
 
 
     public void initGame () {
@@ -24,19 +25,22 @@ public class Uber {
         longBeach = new Beach();
         ceasar = new Casino();
         airport = new Airport();
-        market = new Market(menu, receipt);
-        receipt = new Receipt(market, product);
-
-
+        purchase = new Purchase(market, character, receipt, menu);
+        receipt = new Receipt(market, product, character);
+        market = new Market(menu, receipt, character, purchase);
+        receipt = new Receipt(market, product, character);
     }
 
     public void gameLoop() {
+
+        receipt.checkClass("Hej");
 
         String [] availableLocations = {ceasar.getName(),
                 airport.getName(), market.getName(), longBeach.getName()};
 
         // A function where inputs needs to be made on the console. This will be saved in character variables
         //character.characterInput();
+
 
 
         boolean gameRunning = true; //Variable used to determine if the main game is running

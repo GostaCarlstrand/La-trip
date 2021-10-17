@@ -11,7 +11,6 @@ public class Main {
 
         newGame.initGame();
         newGame.gameLoop();
-        List <String> productTest = new ArrayList<String>();
 
 
 

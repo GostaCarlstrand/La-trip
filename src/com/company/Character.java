@@ -5,14 +5,14 @@ import java.util.Scanner;
 
 public class Character {
     String name;
-    int age;
-    int walletBalance;
-    String [] hats = {"Top Hat", "Cap", "Fedora", "Strawhat"};
+    private int age;
+    private int walletBalance;
+    String[] hats = {"Top Hat", "Cap", "Fedora", "Strawhat"};
     public String choiceOfHat;
 
     public String characterInput() {                     // A function where player inputs their character values
         boolean running = true;
-        while(running) {
+        while (running) {
             try {
                 Scanner input = new Scanner(System.in);
                 System.out.print("Enter name: ");
@@ -39,10 +39,31 @@ public class Character {
         return choiceOfHat;
     }
 
-    public int updateBalanceWallet (int price) {
-        int newWalletBalance = walletBalance - price;
-        walletBalance = newWalletBalance;
+    public int getAge() {
+        return age;
+    }
+
+    public int getWalletBalance() {
         return walletBalance;
+    }
+    public boolean checkCharacterHasMoney(int currentWalletBalance, int totalPrice) {
+        if (currentWalletBalance >= totalPrice) {
+            return true;
+        }
+        return false;
+    }
+
+    public int updateWalletBalance(int totalPrice) {
+        walletBalance = walletBalance - totalPrice;
+        return walletBalance;
+    }
+
+    public boolean checkAgeToPurchase(int age) {
+        if (age < 21) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 
