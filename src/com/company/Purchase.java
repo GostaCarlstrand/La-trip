@@ -12,7 +12,7 @@ public class Purchase {
     ArrayList<String> shoppingCart = new ArrayList<>();
     ArrayList <Integer> shoppingCartPrice = new ArrayList<>();
     ArrayList <Product> productCart = new ArrayList<Product>();
-    int totalSum;       //Used to store the product total value
+    private int totalSum;       //Used to store the product total value
 
     public Purchase(Market market, Character character, Receipt receipt, Menu menu) {
         this.market = market;
@@ -24,8 +24,10 @@ public class Purchase {
 
 
     }
-
-    private void displayProducts(Product[] productInStock) {
+    public int getTotalSum() {
+        return totalSum;
+    }
+    public void displayProducts(Product[] productInStock) {
         for (Product product : productInStock) {
             System.out.println(product.getName());
         }
@@ -42,7 +44,7 @@ public class Purchase {
         }
         return totalSum;
     }
-    public void checkOut(String brandName) {
+    private void checkOut(String brandName) {
         if (brandName == market.franksBrandName)
         {
             if (!character.checkAgeToPurchase(character.getAge())) {
@@ -66,7 +68,7 @@ public class Purchase {
 
         productCart.clear();            //Erase the elements in the ArrayList
     }
-    private void removeProductsFromCart () {
+    public void removeProductsFromCart () {
         boolean running = true;
         System.out.println("Here you can enter the products that you would like to remove,\n" +
                 "Type return to continue shopping");
@@ -97,7 +99,7 @@ public class Purchase {
             }
         }
     }
-    private void addProductToCart(Product [] productInStock, String brandName) {
+    public void addProductToCart(Product [] productInStock, String brandName) {
         boolean running = true;
         while (running) {
             System.out.print("What can I get you?: ");

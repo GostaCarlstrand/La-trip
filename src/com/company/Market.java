@@ -74,13 +74,13 @@ public class Market extends Location {
 
     private void welcomeToFranksLiquor(){
         menu.welcomeToVenueMessage(franksBrandName);
-        displayProducts(franksProductInStock);
-        addProductToCart(franksProductInStock, franksBrandName);
+        purchase.displayProducts(franksProductInStock);
+        purchase.addProductToCart(franksProductInStock, franksBrandName);
     }
     private void welcomeToAlsFruit(){
         menu.welcomeToVenueMessage(alsBrandName);
-        displayProducts(alsProductInStock);
-        addProductToCart(alsProductInStock, alsBrandName);
+        purchase.displayProducts(alsProductInStock);
+        purchase.addProductToCart(alsProductInStock, alsBrandName);
     }
     private void displayProducts(Product [] productInStock) {
         for (Product product : productInStock) {

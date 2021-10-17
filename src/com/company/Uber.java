@@ -25,15 +25,15 @@ public class Uber {
         longBeach = new Beach();
         ceasar = new Casino();
         airport = new Airport();
+        receipt = new Receipt(market, product, character, purchase);
         purchase = new Purchase(market, character, receipt, menu);
-        receipt = new Receipt(market, product, character);
         market = new Market(menu, receipt, character, purchase);
-        receipt = new Receipt(market, product, character);
+        receipt = new Receipt(market, product, character, purchase);
     }
 
     public void gameLoop() {
 
-        receipt.checkClass("Hej");
+
 
         String [] availableLocations = {ceasar.getName(),
                 airport.getName(), market.getName(), longBeach.getName()};
