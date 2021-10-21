@@ -9,8 +9,6 @@ public class Purchase {
     Market market;
     Character character;
     Receipt receipt;
-    ArrayList<String> shoppingCart = new ArrayList<>();
-    ArrayList <Integer> shoppingCartPrice = new ArrayList<>();
     ArrayList <Product> productCart = new ArrayList<Product>();
     private int totalSum;       //Used to store the product total value
 
@@ -19,8 +17,6 @@ public class Purchase {
         this.character = character;
         this.receipt = receipt;
         this.menu = menu;
-
-
 
 
     }
@@ -40,7 +36,7 @@ public class Purchase {
     public int calculatePrice(ArrayList <Product> productCart) {
         int totalSum = 0;
         for (Product i : productCart) {
-            totalSum = totalSum + (i).getPrice();
+            totalSum += (i).getPrice();
         }
         return totalSum;
     }
@@ -64,7 +60,7 @@ public class Purchase {
         character.updateWalletBalance(totalSum);
         System.out.println("That will be: " + totalSum);
         receipt.createReceipt(brandName);
-        receipt.writeReceipt(brandName, market.productCart);
+        receipt.writeReceipt(brandName, productCart);
 
         productCart.clear();            //Erase the elements in the ArrayList
     }
@@ -108,8 +104,8 @@ public class Purchase {
                 if (menuChoice.equalsIgnoreCase(productInStock[i].getName())) {
                     productCart.add(productInStock[i]);
                 } else if (menuChoice.equalsIgnoreCase("1")) {
-                    running = false;                                // Leave store
-                    break;
+                    market.marketActivities(); // Leave store and return to market
+
                 } else if (menuChoice.equalsIgnoreCase("2")) {       //Remove any of the objects
                     if (!(productCart.isEmpty())) {
                         removeProductsFromCart();
@@ -124,8 +120,7 @@ public class Purchase {
                     break;
                 } else if (menuChoice.equalsIgnoreCase("4")) {
                     checkOut(brandName);
-                    running = false;
-                    break;
+                    market.marketActivities();
                 }
             }
             if ((productCart.isEmpty())) {

@@ -21,13 +21,6 @@ public class Character {
                 age = input.nextInt();
                 System.out.print("Enter amount of cash: ");
                 walletBalance = input.nextInt();
-                System.out.println("What hat do you want? : ");
-                for (int i = 0; i < hats.length; i++) {
-                    System.out.println((i + 1) + ". " + hats[i]);
-                }
-                System.out.println("< ");
-                int choice = input.nextInt(); //variable used to declare what menu choice
-                choiceOfHat = hats[choice - 1];
                 running = false;
 
             } catch (InputMismatchException e) {
@@ -39,6 +32,10 @@ public class Character {
         return choiceOfHat;
     }
 
+    public void setAge(int age){
+        this.age = age;
+    }
+
     public int getAge() {
         return age;
     }
@@ -46,6 +43,12 @@ public class Character {
     public int getWalletBalance() {
         return walletBalance;
     }
+
+    public void initWalletBalance(int sum){
+        this.walletBalance = sum;
+    }
+
+
     public boolean checkCharacterHasMoney(int currentWalletBalance, int totalPrice) {
         if (currentWalletBalance >= totalPrice) {
             return true;

@@ -1,14 +1,36 @@
 package com.company;
 
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Menu {
-    Market market;
     Random random = new Random();
+    Character character;
 
-    public Menu (Market market) {
-        this.market = market;
+    public Menu (Character character) {
+        this.character = character;
+    }
+
+    public void initCharacter() {                     // A function where player inputs their character values
+        boolean running = true;
+        while (running) {
+            try {
+                Scanner input = new Scanner(System.in);
+                System.out.print("Enter name: ");
+                character.name = input.nextLine();
+                System.out.print("Enter age: ");
+                character.setAge(input.nextInt());
+                System.out.print("Enter amount of cash: ");
+                character.initWalletBalance(input.nextInt());
+                running = false;
+
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: Enter a valid value");
+                continue;
+
+            }
+        }
     }
 
     public String menuInput() {

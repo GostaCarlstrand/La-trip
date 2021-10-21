@@ -1,4 +1,6 @@
-package com.company;
+package com.company.casino;
+
+import com.company.Location;
 
 import java.util.Random;
 import java.util.Scanner;
