@@ -1,7 +1,10 @@
 package com.company.casino.blackjack;
 
 
-public class Game {
+import com.company.Character;
+
+public class Blackjack {
+    Character character;
     Menu menu;
     Deck deck;
     Player player;
@@ -11,8 +14,12 @@ public class Game {
     boolean hasPlayerWonTheGame;
     boolean gameIsTie;
 
+    public Blackjack(Character character) {
+        this.character = character;
+    }
 
     public void initGame() {
+        bet = 0;
         count = 3;
         deck = new Deck();
         player = new Player();
@@ -21,30 +28,37 @@ public class Game {
         deck.initCards();           //Creating the objects cards
         deck.sortArrayDeckOfCards(deck.deckOfCards);//Creating a single array with all cards in order
         deck.shuffleDeckOfCards();
-        player.walletBalance = 200;
 
     }
 
     public void gameLoop() {
-        bet = 0;
-        deck.shuffleDeckOfCards();
-        player.displayWalletBalance();
-        System.out.print("How much are you willing to bet?: ");
-        bet = menu.placeBet();
-        player.setWalletBalance(bet);
-        dealStartHand();
-        gamePlaying();
-        displayGameResult();
-        wantToPlayAgain();
+    boolean blackjackRunning = true;
+        while (blackjackRunning) {
+            initGame();
+            deck.shuffleDeckOfCards();
+            System.out.println("You have " + character.getWalletBalance());
+            System.out.print("How much are you willing to bet?: ");
+            bet = menu.placeBet();
+            if (!character.checkCharacterHasMoney(character.getWalletBalance(), bet)) {
+                System.out.println("You do not have money enough to place that bet");
+                blackjackRunning = quitGame();
+                break;
+            }
+            character.reduceWalletBalance(bet);
+            dealStartHand();
+            gamePlaying();
+            displayGameResult();
+            wantToPlayAgain();
+        }
 
     }
     public void returnBet() {
-        System.out.println("This is how much you win: "+ (bet*2));
-        player.walletBalance += (bet*2);
+        System.out.println("This is how much you win: "+ (bet*2) + " dollars");
+        character.increaseWalletBalance((bet*2)); //If game is a win, 2x bet is repaid
     }
 
     public void returnMoney(){
-        player.walletBalance += bet;
+        character.increaseWalletBalance(bet); //If game is draw, bet is repaid
     }
 
     public void dealStartHand() {
@@ -95,8 +109,8 @@ public class Game {
         }
     }
 
-    public void quitGame() {
-        System.exit(1);
+    public boolean quitGame() {
+        return false;
     }
 
     public void playersTurn() {
@@ -106,8 +120,8 @@ public class Game {
             player.displayCurrentHand();
             System.out.println("You have " + player.currentHandValue);
             if (player.currentHandValue == 21 && (!dealer.currentHand.get(0).isAce)) {
-                System.out.println("BLACKJACK, you have won");
-                System.out.print("How much are you willing to bet?: ");
+                System.out.println("BLACKJACK, you have won " + bet*2 + " dollars");
+                character.increaseWalletBalance(bet*2);
                 wantToPlayAgain();
             }
             String menuChoice = menu.menuInput();

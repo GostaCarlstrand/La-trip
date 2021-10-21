@@ -43,10 +43,10 @@ public class Purchase {
     private void checkOut(String brandName) {
         if (brandName == market.franksBrandName)
         {
-            if (!character.checkAgeToPurchase(character.getAge())) {
+            if (!character.checkAge(character.getAge())) {
                 System.out.println("Sorry, you are under age, come back in " + (21-character.getAge()) + " years");
                 productCart.clear();
-                addProductToCart(market.franksProductInStock, market.franksBrandName);    //Calling the method if character is under age
+                market.marketActivities();
             }
         }
 
@@ -55,9 +55,9 @@ public class Purchase {
             System.out.println("You only have " + character.getWalletBalance() + " dollars, this will cost you\n "+
                     totalSum + ", come back with more money!");
             productCart.clear();
-            addProductToCart(market.franksProductInStock, market.franksBrandName);//Call the method to return and not execute the other code in the method
+            market.marketActivities();
         }
-        character.updateWalletBalance(totalSum);
+        character.reduceWalletBalance(totalSum);
         System.out.println("That will be: " + totalSum);
         receipt.createReceipt(brandName);
         receipt.writeReceipt(brandName, productCart);

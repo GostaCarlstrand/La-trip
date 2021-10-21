@@ -1,6 +1,7 @@
 package com.company;
 
-import com.company.casino.Casino;
+import com.company.casino.*;
+import com.company.casino.blackjack.Blackjack;
 import com.company.product.*;
 
 
@@ -15,20 +16,25 @@ public class Uber {
     Menu menu;
     Receipt receipt;
     Purchase purchase;
+    Blackjack blackjack;
 
 
     public void initGame () {
+
         product = new Product();
         character = new Character();
+        blackjack = new Blackjack(character);
         longBeach = new Beach();
-        ceasar = new Casino();
         airport = new Airport();
         menu = new Menu(character);
+        ceasar = new Casino(menu, blackjack);
         market = new Market(menu);
         receipt = new Receipt(character);
         purchase = new Purchase(market, character, receipt, menu);
         receipt.addPurchase(purchase);
         market.addPurchase(purchase);
+        menu.initCharacter();
+
 
 
     }
@@ -37,9 +43,8 @@ public class Uber {
         String [] availableLocations = {ceasar.getName(),
                 airport.getName(), market.getName(), longBeach.getName()};
 
-        // A function where inputs needs to be made on the console. This will be saved in character variables
-        //character.characterInput();
-        menu.initCharacter();
+
+
 
 
         boolean gameRunning = true; //Variable used to determine if the main game is running
@@ -58,6 +63,12 @@ public class Uber {
 
                     break;
                 case "ceasar palace":
+                    if (character.checkAge(character.getAge())) {
+                        ceasar.casinoActivities();
+                    } else {
+                        System.out.println("You are to young to enter");
+
+                    }
 
                     break;
                 case "market":

@@ -1,58 +1,33 @@
 package com.company.casino;
 
 import com.company.Location;
-
-import java.util.Random;
-import java.util.Scanner;
+import com.company.Menu;
+import com.company.casino.blackjack.*;
 
 
 public class Casino extends Location {
-    public Casino(){
+    Menu menu;
+    Blackjack blackjack;
+
+
+    public Casino(Menu menu, Blackjack blackjack){
     name = "Ceasar Palace";
     address = "Las Vegas Blvd";
     description = "Here you can win some dollars back";
     taxiCost = 45;
-    String[] casinoActivitiesList = {"Play Dice", "Black Jack"};
-
+    activities = new String[]{"Blackjack", "Dice", "Slots"};
+    this.menu = menu;
+    this.blackjack = blackjack;
     }
 
-
-    public String [] getCasinoActivitiesList() {
-        String[] casinoActivitiesList = {"Play Dice", "Black Jack"};
-        return casinoActivitiesList;
-    }
-
-
-    public void playDice () {
-        boolean running = true;
-        int guess;
-        try {
-            while (running) {
-                Random randomNumber = new Random();
-                System.out.println("Hi, choose a number between 1-6 and much you would like to bet, \n" +
-            "IF YOU WIN: Your bet will be multiplied with the number you guessed \n" +
-            "IF YOU LOOSE: You will loose amount*(number in percentage)");
-                Scanner scanner = new Scanner(System.in);
-                System.out.print(" >");
-                guess = scanner.nextInt();
-
-                if (guess == ((int)(randomNumber.nextDouble()*7))) {
-                    System.out.println("Correct");
-                    running=false;
-                }
-
-
-
-
-
-
-            }
-
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void casinoActivities() {
+        int menuChoice = menu.chooseLocationActivity(activities);
+        switch (menuChoice) {
+            case 0:
+                blackjack.gameLoop();
         }
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.company;
 import com.company.product.*;
 
+
 import java.util.*;
 
 public class Market extends Location {

@@ -14,7 +14,6 @@ public class Receipt {
         this.character = character;
 
     }
-
     private String displayProductReceipt(ArrayList<Product> productCart) {
         String products = "";
         for (int i = 0; i < productCart.size(); i++) {
@@ -58,7 +57,6 @@ public class Receipt {
     private int displayPriceReceipt(ArrayList<Product> productCart, int i) {
         return productCart.get(i).getPrice();
     }
-
     public void addPurchase(Purchase purchase) {
         this.purchase = purchase;
     }
