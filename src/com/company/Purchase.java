@@ -73,7 +73,7 @@ public class Purchase {
             System.out.print("What product would you like to remove?: ");
             String menuChoice = menu.menuInput();
             boolean isPartOfProductCart = false;
-            if (menuChoice.equalsIgnoreCase("return")) {
+            if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)) {
                 running = false;
                 break;
             }
@@ -103,10 +103,13 @@ public class Purchase {
             for (int i = 0; i < productInStock.length; i++) {
                 if (menuChoice.equalsIgnoreCase(productInStock[i].getName())) {
                     productCart.add(productInStock[i]);
-                } else if (menuChoice.equalsIgnoreCase("1")) {
+                } else if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)) {       //accepted inputs are entered in the menu Class
+                    System.out.println("Ok, have a good day");
+                    productCart.clear();
                     market.marketActivities(); // Leave store and return to market
 
-                } else if (menuChoice.equalsIgnoreCase("2")) {       //Remove any of the objects
+
+                } else if (menu.acceptedInputs(menuChoice, menu.acceptedRemovePhrases)) {       //Remove any of the objects
                     if (!(productCart.isEmpty())) {
                         removeProductsFromCart();
                         break;
@@ -114,7 +117,7 @@ public class Purchase {
                         System.out.println("Your cart is empty, you have no products to remove");
                         break;
                     }
-                } else if (menuChoice.equalsIgnoreCase("3")) {       // Remove all objects in shopping cart
+                } else if (menu.acceptedInputs(menuChoice, menu.acceptedClearPhrases)) {       // Remove all objects in shopping cart
                     productCart.clear();
                     System.out.println("Your cart is now empty");
                     break;

@@ -53,6 +53,7 @@ public class Uber {
             // A function where the input can be entered. Input must match on the locations in the uberLocation list
             currentUberLocation = menu.locationMenu(availableLocations);
 
+
             try {
             switch (currentUberLocation) {
                 case "long beach":
@@ -73,8 +74,9 @@ public class Uber {
                     break;
                 case "market":
                     Location.welcomeToLocation(market.name, market.description);
+                    menu.displayLocationMenu(market.activities);
                     //market.marketActivities(menu.chooseLocationActivity(market.activities));
-                    market.marketActivities();
+                    market.marketActivities2();
                     break;
             }
                 //gameRunning = false;

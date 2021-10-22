@@ -7,6 +7,9 @@ import java.util.Scanner;
 public class Menu {
     Random random = new Random();
     Character character;
+    String [] acceptedExitPhrases = {"Leave", "Return", "Exit" , "Leave store", "1"};
+    String [] acceptedRemovePhrases = {"Remove any product", "Remove", "Remove products","remove prod", "remove product", "2"};
+    String [] acceptedClearPhrases = {"clear cart","erase cart", "delete cart", "3", "clear my cart", "clear", "remove all"};
 
     public Menu (Character character) {
         this.character = character;
@@ -35,11 +38,11 @@ public class Menu {
 
     public String menuInput() {
             Scanner input = new Scanner(System.in);  //create a new scanner object
-            String menuInput = input.nextLine();
+            String menuInput = input.nextLine().trim();
             return menuInput;
     }
 
-    private void displayLocationMenu(String[] uberLocation) {
+    public void displayLocationMenu(String[] uberLocation) {
         System.out.println("What would you like to do?: ");
         for (int i = 0; i < uberLocation.length; i++) {
             System.out.println((i + 1) + ". " + uberLocation[i]);
@@ -76,12 +79,19 @@ public class Menu {
                 "what can I get you?: \n" +
                 "1. Leave store \n" +
                 "2. Remove any product \n" +
-                "3. Remove all objects \n" +
+                "3. Clear cart \n" +
                 "4. Go to cashier"
         );
     }
 
-    
+    public boolean acceptedInputs(String menuChoice, String [] acceptedPhrases) {
+        for(String phrase : acceptedPhrases) {
+            if(menuChoice.equalsIgnoreCase(phrase)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

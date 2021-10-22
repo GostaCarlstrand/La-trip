@@ -21,6 +21,8 @@ public class Market extends Location {
         Product [] alsProductInStock = {watermelon, pear, apple, banana, kiwi, potato};
         String alsBrandName = "Al's Fruit";
         String franksBrandName = "Franks Tobacco & Liquor";
+        String [] acceptedPhrasesFranks = {"Franks Tobacco & Liquor", "Franks", "Liquor", "Frank", "Tobacco"};
+        String [] acceptedPhrasesAls = {"Al's Fruit", "Fruit", "Als", "Al's", "Fruits", "als fruit"};
 
 
     public Market(Menu menu) {
@@ -28,7 +30,7 @@ public class Market extends Location {
         address = "Apple Rd";
         description = "The market offers a variety of different products, just be prepared to bargain";
         taxiCost = 45;
-        activities = new String[]{"Fruit", "Alcohol"};
+        activities = new String[]{alsBrandName, franksBrandName, "Leave"};
         this.menu = menu;
 
     }
@@ -39,13 +41,17 @@ public class Market extends Location {
         int menuChoice = menu.chooseLocationActivity(activities);
         while (running) {
             switch (menuChoice) {
-                case 0:
+                case 0:     //Fruit
                     welcomeToAlsFruit();
                     running = false;
                     break;
 
-                case 1:
+                case 1:         //Alcohol
                     welcomeToFranksLiquor();
+                    running = false;
+                    break;
+
+                case 2:         //Leave
                     running = false;
                     break;
 
@@ -53,14 +59,41 @@ public class Market extends Location {
                     System.out.println("There no such activity ");
                     running = false;
                     break;
+
             }
 
         }
     }
+
+
+    public void marketActivities2 () {
+        boolean running = true;
+        String menuChoice = menu.menuInput();
+        while (running) {
+            if (menu.acceptedInputs(menuChoice, acceptedPhrasesAls)) {
+                welcomeToAlsFruit();
+                running = false;
+                break;
+            } else if (menu.acceptedInputs(menuChoice, acceptedPhrasesFranks)){
+                welcomeToFranksLiquor();
+                running = false;
+                break;
+            } else if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)){
+                running = false;
+                break;
+            }
+        }
+    }
+
+
+
+
+
     private void welcomeToFranksLiquor(){
         menu.welcomeToVenueMessage(franksBrandName);
         purchase.displayProducts(franksProductInStock);
         purchase.addProductToCart(franksProductInStock, franksBrandName);
+
     }
     private void welcomeToAlsFruit(){
         menu.welcomeToVenueMessage(alsBrandName);
@@ -71,4 +104,5 @@ public class Market extends Location {
     public void addPurchase(Purchase purchase) {
         this.purchase = purchase;
     }
+
 }
