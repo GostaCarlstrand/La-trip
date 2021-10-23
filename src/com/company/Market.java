@@ -35,38 +35,9 @@ public class Market extends Location {
 
     }
 
-
     public void marketActivities () {
-        boolean running = true;
-        int menuChoice = menu.chooseLocationActivity(activities);
-        while (running) {
-            switch (menuChoice) {
-                case 0:     //Fruit
-                    welcomeToAlsFruit();
-                    running = false;
-                    break;
-
-                case 1:         //Alcohol
-                    welcomeToFranksLiquor();
-                    running = false;
-                    break;
-
-                case 2:         //Leave
-                    running = false;
-                    break;
-
-                default:
-                    System.out.println("There no such activity ");
-                    running = false;
-                    break;
-
-            }
-
-        }
-    }
-
-
-    public void marketActivities2 () {
+        Location.welcomeToLocation(name, description);
+        menu.displayLocationMenu(activities);
         boolean running = true;
         String menuChoice = menu.menuInput();
         while (running) {

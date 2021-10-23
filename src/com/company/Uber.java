@@ -23,10 +23,10 @@ public class Uber {
 
         product = new Product();
         character = new Character();
-        blackjack = new Blackjack(character);
         longBeach = new Beach();
         airport = new Airport();
         menu = new Menu(character);
+        blackjack = new Blackjack(character, menu);
         ceasar = new Casino(menu, blackjack);
         market = new Market(menu);
         receipt = new Receipt(character);
@@ -58,9 +58,7 @@ public class Uber {
             switch (currentUberLocation) {
                 case "long beach":
                     Location.welcomeToLocation(longBeach.name, longBeach.description);
-
-                    break;
-                case "short beach":
+                    longBeach.longBeachActivities();
 
                     break;
                 case "ceasar palace":
@@ -73,10 +71,9 @@ public class Uber {
 
                     break;
                 case "market":
-                    Location.welcomeToLocation(market.name, market.description);
-                    menu.displayLocationMenu(market.activities);
-                    //market.marketActivities(menu.chooseLocationActivity(market.activities));
-                    market.marketActivities2();
+                    //Location.welcomeToLocation(market.name, market.description);
+                    //menu.displayLocationMenu(market.activities);
+                    market.marketActivities();
                     break;
             }
                 //gameRunning = false;

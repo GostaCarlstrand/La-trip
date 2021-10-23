@@ -2,10 +2,12 @@ package com.company.casino.blackjack;
 
 
 import com.company.Character;
+import com.company.Menu;
 
 public class Blackjack {
-    Character character;
     Menu menu;
+    Character character;
+    BlackjackMenu blackjackmenu;
     Deck deck;
     Player player;
     Player dealer;
@@ -14,8 +16,9 @@ public class Blackjack {
     boolean hasPlayerWonTheGame;
     boolean gameIsTie;
 
-    public Blackjack(Character character) {
+    public Blackjack(Character character, Menu menu) {
         this.character = character;
+        this.menu = menu;
     }
 
     public void initGame() {
@@ -24,13 +27,14 @@ public class Blackjack {
         deck = new Deck();
         player = new Player();
         dealer = new Player();
-        menu = new Menu();
+        blackjackmenu = new BlackjackMenu();
+        hasPlayerWonTheGame = false;
+        gameIsTie = false;
         deck.initCards();           //Creating the objects cards
         deck.sortArrayDeckOfCards(deck.deckOfCards);//Creating a single array with all cards in order
         deck.shuffleDeckOfCards();
 
     }
-
     public void gameLoop() {
     boolean blackjackRunning = true;
         while (blackjackRunning) {
@@ -38,7 +42,7 @@ public class Blackjack {
             deck.shuffleDeckOfCards();
             System.out.println("You have " + character.getWalletBalance());
             System.out.print("How much are you willing to bet?: ");
-            bet = menu.placeBet();
+            bet = blackjackmenu.placeBet();
             if (!character.checkCharacterHasMoney(character.getWalletBalance(), bet)) {
                 System.out.println("You do not have money enough to place that bet");
                 blackjackRunning = quitGame();
@@ -83,18 +87,10 @@ public class Blackjack {
             hasPlayerWonTheGame = true;
         } else if(player.currentHandValue > dealer.currentHandValue) {
             hasPlayerWonTheGame = true;
-        } else if (dealer.currentHandValue == 17 && player.currentHandValue == 17) {
-            hasPlayerWonTheGame = false;
-        } else if (dealer.currentHandValue == 18 && player.currentHandValue == 18) {
-            hasPlayerWonTheGame = false;
-        } else if (dealer.currentHandValue == 19 && player.currentHandValue == 19) {
-            hasPlayerWonTheGame = false;
         } else if (dealer.currentHandValue == 20 && player.currentHandValue == 20) {
             gameIsTie = true;
         } else if (dealer.currentHandValue == 21 && player.currentHandValue == 21) {
             gameIsTie = true;
-        } else if (dealer.currentHandValue > player.currentHandValue) {
-            hasPlayerWonTheGame = false;
         }
     }
     public void displayGameResult() {
@@ -164,7 +160,7 @@ public class Blackjack {
     }
 
     public void wantToPlayAgain() {
-        String menuChoice = menu.leaveGame();
+        String menuChoice = blackjackmenu.leaveGame();
         if (menuChoice.equalsIgnoreCase("yes")) {
             gameLoop();
         } else {

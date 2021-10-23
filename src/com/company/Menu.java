@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Menu {
     Random random = new Random();
     Character character;
-    String [] acceptedExitPhrases = {"Leave", "Return", "Exit" , "Leave store", "1"};
+    public String [] acceptedExitPhrases = {"Leave", "Return", "Exit" , "Leave store", "1"};
     String [] acceptedRemovePhrases = {"Remove any product", "Remove", "Remove products","remove prod", "remove product", "2"};
     String [] acceptedClearPhrases = {"clear cart","erase cart", "delete cart", "3", "clear my cart", "clear", "remove all"};
 
@@ -54,18 +54,6 @@ public class Menu {
         displayLocationMenu(uberLocation);
         String menuChoice = menuInput();
         return menuChoice;
-    }
-
-    public int chooseLocationActivity(String[] activities) {
-        displayLocationMenu(activities);
-        String menuChoice = menuInput();
-        int menuInteger = -1;
-            for (int i = 0; i < activities.length; i++) {
-                if (menuChoice.equalsIgnoreCase(activities[i])) {    //check if the menu input is equal to any in the list
-                    menuInteger = (i); //Will be used in the switch method
-                }
-            }
-        return menuInteger;
     }
 
     public String generateRandomGreeting() {

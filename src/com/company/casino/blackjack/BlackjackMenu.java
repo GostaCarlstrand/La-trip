@@ -3,7 +3,7 @@
 package com.company.casino.blackjack;
 import java.util.Scanner;
 
-public class Menu {
+public class BlackjackMenu {
     Scanner stringInput = new Scanner(System.in);
     Scanner intInput = new Scanner(System.in);
 
