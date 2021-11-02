@@ -5,10 +5,14 @@ public class Main {
     public static void main(String[] args) {
         Uber newGame = new Uber();
 
+
+
+        newGame.initGame();
         newGame.gameLoop();
 
 
 
 
     }
+
 }
