@@ -8,8 +8,7 @@ public class Menu {
     Random random = new Random();
     Character character;
     public String [] acceptedExitPhrases = {"Leave", "Return", "Exit" , "Leave store", "1"};
-    String [] acceptedRemovePhrases = {"Remove any product", "Remove", "Remove products","remove prod", "remove product", "2"};
-    String [] acceptedClearPhrases = {"clear cart","erase cart", "delete cart", "3", "clear my cart", "clear", "remove all"};
+
 
     public Menu (Character character) {
         this.character = character;
@@ -40,6 +39,12 @@ public class Menu {
             Scanner input = new Scanner(System.in);  //create a new scanner object
             String menuInput = input.nextLine().trim();
             return menuInput;
+    }
+
+    public int menuIntInput () {
+        Scanner input = new Scanner(System.in);  //create a new scanner object
+        int menuInput = input.nextInt();
+        return menuInput;
     }
 
     public void displayLocationMenu(String[] uberLocation) {

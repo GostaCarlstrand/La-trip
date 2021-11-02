@@ -10,7 +10,9 @@ public class Purchase {
     Character character;
     Receipt receipt;
     ArrayList <Product> productCart = new ArrayList<Product>();
-    private int totalSum;       //Used to store the product total value
+    private int totalSum;
+    String [] acceptedRemovePhrases = {"Remove any product", "Remove", "Remove products","remove prod", "remove product", "2"};
+    String [] acceptedClearPhrases = {"clear cart","erase cart", "delete cart", "3", "clear my cart", "clear", "remove all"};
 
     public Purchase(Market market, Character character, Receipt receipt, Menu menu) {
         this.market = market;
@@ -30,8 +32,7 @@ public class Purchase {
 
     }
     private String displayCart() {
-        String displayCart = productCart.toString().replace("[", "").replace("]", "");
-        return displayCart;
+        return productCart.toString().replace("[", "").replace("]", "");
     }
     public int calculatePrice(ArrayList <Product> productCart) {
         int totalSum = 0;
@@ -51,7 +52,7 @@ public class Purchase {
         }
 
         totalSum = calculatePrice(productCart);
-        if (!(character.checkCharacterHasMoney(character.getWalletBalance(), totalSum))){
+        if (!(character.checkCharacterHasMoney(totalSum))){
             System.out.println("You only have " + character.getWalletBalance() + " dollars, this will cost you\n "+
                     totalSum + ", come back with more money!");
             productCart.clear();
@@ -74,7 +75,6 @@ public class Purchase {
             String menuChoice = menu.menuInput();
             boolean isPartOfProductCart = false;
             if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)) {
-                running = false;
                 break;
             }
             for (Product p : productCart) {
@@ -90,7 +90,6 @@ public class Purchase {
             }
 
             if (productCart.isEmpty()) {
-                running = false;
                 break;
             }
         }
@@ -109,7 +108,7 @@ public class Purchase {
                     market.marketActivities(); // Leave store and return to market
 
 
-                } else if (menu.acceptedInputs(menuChoice, menu.acceptedRemovePhrases)) {       //Remove any of the objects
+                } else if (menu.acceptedInputs(menuChoice, acceptedRemovePhrases)) {       //Remove any of the objects
                     if (!(productCart.isEmpty())) {
                         removeProductsFromCart();
                         break;
@@ -117,7 +116,7 @@ public class Purchase {
                         System.out.println("Your cart is empty, you have no products to remove");
                         break;
                     }
-                } else if (menu.acceptedInputs(menuChoice, menu.acceptedClearPhrases)) {       // Remove all objects in shopping cart
+                } else if (menu.acceptedInputs(menuChoice, acceptedClearPhrases)) {       // Remove all objects in shopping cart
                     productCart.clear();
                     System.out.println("Your cart is now empty");
                     break;

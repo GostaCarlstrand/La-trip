@@ -10,7 +10,6 @@ public class Deck {
     ArrayList<Card> sortedDeckOfCards = new ArrayList<Card>();
     String[] names = {"Jack", "Queen", "King", "Ace"};
 
-
     public void initCards() {
         for (int i = 0; i <= 3; i++) {
             String suit = suits[i];
@@ -32,20 +31,15 @@ public class Deck {
             }
         }
     }
-
-    public ArrayList<Card> sortArrayDeckOfCards(Card[][] deckOfCard) { //From multidimensional to single arraylist
+    public void sortArrayDeckOfCards(Card[][] deckOfCard) { //From multidimensional to single arraylist
         for (int i = 0; i < deckOfCard.length; i++) {
             for (int a = 0; a < deckOfCard[i].length; a++) {
                 sortedDeckOfCards.add(deckOfCard[i][a]);
             }
         }
-        return sortedDeckOfCards;
     }
-
-    public ArrayList<Card> shuffleDeckOfCards() {
+    public void shuffleDeckOfCards() {
         Collections.shuffle(sortedDeckOfCards);
-        return sortedDeckOfCards;
     }
-
 }
 
