@@ -35,16 +35,13 @@ public class Market extends Location {
     }
     public void marketActivities () {
         Location.welcomeToLocation(name, description);
+        while (true) {
         menu.displayLocationMenu(activities);
-        boolean running = true;
         String menuChoice = menu.menuInput();
-        while (running) {
             if (menu.acceptedInputs(menuChoice, acceptedPhrasesAls)) {
                 welcomeToAlsFruit();
-                break;
             } else if (menu.acceptedInputs(menuChoice, acceptedPhrasesFranks)){
                 welcomeToFranksLiquor();
-                break;
             } else if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)){
                 break;
             }

@@ -6,6 +6,10 @@ public class Location {
     protected String description;                 //A description to the location
     protected int taxiCost;                       //What the taxi trip costs
     public String[] activities;
+    String [] acceptedMarketPhrases = {"market", "fruit market", "fruits", "fruit", "the market"};
+    String [] acceptedCasinoPhrases = {"casino", "ceasar", "ceasar palace", "the casino", "palace", "ceasar casino"};
+    String [] acceptedBeachPhrases = {"long beach", "beach", "swim", "the beach"};
+    String [] acceptedAirportPhrases = {"airport", "lax", "the airport", "home"};
 
     public String getName() {
         return name;

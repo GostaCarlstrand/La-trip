@@ -12,7 +12,6 @@ public class Receipt {
 
     public Receipt(Character character) {
         this.character = character;
-
     }
     private String displayProductReceipt(ArrayList<Product> productCart) {
         String products = "";

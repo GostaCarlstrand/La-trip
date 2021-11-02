@@ -13,6 +13,7 @@ public class Purchase {
     private int totalSum;
     String [] acceptedRemovePhrases = {"Remove any product", "Remove", "Remove products","remove prod", "remove product", "2"};
     String [] acceptedClearPhrases = {"clear cart","erase cart", "delete cart", "3", "clear my cart", "clear", "remove all"};
+    String [] acceptedPayPhrases = {"pay","go to cashier", "pay now", "cashier", "purchase", "to cashier", "finish", "finished", "checkout"};
 
     public Purchase(Market market, Character character, Receipt receipt, Menu menu) {
         this.market = market;
@@ -42,33 +43,33 @@ public class Purchase {
         return totalSum;
     }
     private void checkOut(String brandName) {
-        if (brandName == market.franksBrandName)
-        {
-            if (!character.checkAge(character.getAge())) {
-                System.out.println("Sorry, you are under age, come back in " + (21-character.getAge()) + " years");
-                productCart.clear();
-                market.marketActivities();
+        while (true) {
+            if (brandName == market.franksBrandName) {
+                if (!character.checkAge(character.getAge())) {
+                    System.out.println("Sorry, you are under age, come back in " + (21 - character.getAge()) + " years");
+                    productCart.clear();
+                    break;
+                }
             }
-        }
 
-        totalSum = calculatePrice(productCart);
-        if (!(character.checkCharacterHasMoney(totalSum))){
-            System.out.println("You only have " + character.getWalletBalance() + " dollars, this will cost you\n "+
-                    totalSum + ", come back with more money!");
-            productCart.clear();
-            market.marketActivities();
+            totalSum = calculatePrice(productCart);
+            if (!(character.checkCharacterHasMoney(totalSum))) {
+                System.out.println("You only have " + character.getWalletBalance() + " dollars, this will cost you\n " +
+                        totalSum + ", come back with more money!");
+                productCart.clear();
+                break;
+            }
+            character.reduceWalletBalance(totalSum);
+            System.out.println("That will be: " + totalSum);
+            receipt.createReceipt(brandName);
+            receipt.writeReceipt(brandName, productCart);
+            productCart.clear();            //Erase the elements in the ArrayList
+            break;
         }
-        character.reduceWalletBalance(totalSum);
-        System.out.println("That will be: " + totalSum);
-        receipt.createReceipt(brandName);
-        receipt.writeReceipt(brandName, productCart);
-
-        productCart.clear();            //Erase the elements in the ArrayList
     }
     public void removeProductsFromCart () {
         boolean running = true;
-        System.out.println("Here you can enter the products that you would like to remove,\n" +
-                "Type return to continue shopping");
+        System.out.println("Here you can enter the products that you would like to remove");
         while (running) {
             System.out.println("This is your current cart: " + displayCart());
             System.out.print("What product would you like to remove?: ");
@@ -102,35 +103,37 @@ public class Purchase {
             for (int i = 0; i < productInStock.length; i++) {
                 if (menuChoice.equalsIgnoreCase(productInStock[i].getName())) {
                     productCart.add(productInStock[i]);
-                } else if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)) {       //accepted inputs are entered in the menu Class
-                    System.out.println("Ok, have a good day");
-                    productCart.clear();
-                    market.marketActivities(); // Leave store and return to market
-
-
-                } else if (menu.acceptedInputs(menuChoice, acceptedRemovePhrases)) {       //Remove any of the objects
-                    if (!(productCart.isEmpty())) {
-                        removeProductsFromCart();
-                        break;
-                    } else {
-                        System.out.println("Your cart is empty, you have no products to remove");
-                        break;
-                    }
-                } else if (menu.acceptedInputs(menuChoice, acceptedClearPhrases)) {       // Remove all objects in shopping cart
-                    productCart.clear();
-                    System.out.println("Your cart is now empty");
                     break;
-                } else if (menuChoice.equalsIgnoreCase("4")) {
-                    checkOut(brandName);
-                    market.marketActivities();
                 }
             }
-            if ((productCart.isEmpty())) {
+            if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)) {       //accepted inputs are entered in the menu Class
+                System.out.println("Ok, have a good day");
+                productCart.clear();
+                break;
+
+            } else if (menu.acceptedInputs(menuChoice, acceptedRemovePhrases)) {       //Remove any of the objects
+                if (!(productCart.isEmpty())) {
+                    removeProductsFromCart();
+                } else {
+                    System.out.println("Your cart is empty, you have no products to remove");
+                }
+                continue;
+
+            } else if (menu.acceptedInputs(menuChoice, acceptedClearPhrases)) {       // Remove all objects in shopping cart
+                productCart.clear();
+                System.out.println("Your cart is now empty");
+                continue;
+            } else if (menu.acceptedInputs(menuChoice, acceptedPayPhrases)) {
+                checkOut(brandName);
+                break;
+            }
+            if ((productCart.isEmpty()) && menu.acceptedInputs(menuChoice, acceptedPayPhrases)) {
                 displayProducts(productInStock);
             } else {
                 System.out.println("Product in your cart: " + displayCart());
             }
-
         }
+
     }
+
 }

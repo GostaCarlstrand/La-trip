@@ -10,6 +10,7 @@ public class Uber {
     Character character;
     Beach longBeach;
     Casino ceasar;
+    Location location;
     Location airport;
     Market market;
     Product product;
@@ -20,9 +21,11 @@ public class Uber {
     Dice dice;
 
     public void initGame () {
+
         product = new Product();
         character = new Character();
         longBeach = new Beach();
+        location = new Location();
         airport = new Airport();
         menu = new Menu(character);
         dice = new Dice(menu, character);
@@ -36,35 +39,30 @@ public class Uber {
         menu.initCharacter();
     }
 
+
     public void gameLoop() {
         String [] availableLocations = {ceasar.getName(),
                 airport.getName(), market.getName(), longBeach.getName()};
 
         boolean gameRunning = true;
-
         while (gameRunning) {
             currentUberLocation = menu.locationMenu(availableLocations);
-            try {
-            switch (currentUberLocation) {
-                case "long beach":
-
-                    Location.welcomeToLocation(longBeach.name, longBeach.description);
-                    longBeach.longBeachActivities();
-                    break;
-                case "ceasar palace":
-                    if (character.checkAge(character.getAge())) {
-                        ceasar.casinoActivities();
-                    } else {
-                        System.out.println("You are to young to enter");
-                    }
-                    break;
-                case "market":
-                    market.marketActivities();
-                    break;
+            if (menu.acceptedInputs(currentUberLocation, location.acceptedCasinoPhrases)){
+                if (character.checkAge(character.getAge())) {
+                    ceasar.casinoActivities();
+                } else {
+                    System.out.println("You are to young to enter");
+                }
             }
-                gameRunning = false;
-            } catch (NullPointerException e) {
-                System.out.println("Enter a valid location");;
+            else if (menu.acceptedInputs(currentUberLocation, location.acceptedAirportPhrases)){
+                System.out.println("Taking you home");
+                break;
+            }
+            else if(menu.acceptedInputs(currentUberLocation, location.acceptedMarketPhrases)){
+                market.marketActivities();
+            }
+            else if(menu.acceptedInputs(currentUberLocation, location.acceptedBeachPhrases)){
+                longBeach.longBeachActivities();
             }
         }
     }

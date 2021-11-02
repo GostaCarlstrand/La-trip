@@ -48,8 +48,9 @@ public class Blackjack {
             dealStartHand();
             gamePlaying();
             displayGameResult();
-            wantToPlayAgain();
-            break;
+            if (!wantToPlayAgain()) {
+                break;
+            }
         }
     }
     public void returnBet() {
@@ -139,12 +140,13 @@ public class Blackjack {
             }
         }
     }
-    public void wantToPlayAgain() {
+    public boolean wantToPlayAgain() {
         String menuChoice = blackjackmenu.leaveGame();
         if (menuChoice.equalsIgnoreCase("yes")) {
-            gameLoop();
+            return true;
         } else {
             System.out.println("Ok, thanks for playing Blackjack with me");
+            return false;
         }
     }
     public void gamePlaying() {

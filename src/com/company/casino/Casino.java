@@ -23,17 +23,15 @@ public class Casino extends Location {
     this.diceGame = diceGame;
     }
     public void casinoActivities() {
-        Location.welcomeToLocation(name, description);
-        menu.displayLocationMenu(activities);
         boolean running = true;
-        String menuChoice = menu.menuInput();
+        Location.welcomeToLocation(name, description);
         while (running){
+        menu.displayLocationMenu(activities);
+        String menuChoice = menu.menuInput();
             if (menu.acceptedInputs(menuChoice, acceptedPhrasesBlackjack)) {
                 blackjack.gameLoop();
-                break;
             }else if (menu.acceptedInputs(menuChoice, acceptedPhrasesDiceGame)) {
                 diceGame.gameLoop();
-                break;
             }else if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)){
                 break;
             }

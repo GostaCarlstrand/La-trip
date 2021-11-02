@@ -12,6 +12,7 @@ public class Beach extends Location{
         description = "A beautiful beach";
     }
     public void longBeachActivities() {
+        Location.welcomeToLocation(name, description);
         String [] activities = {"Take a swim", "Go for a walk", "Leave"};
         boolean beachRunning = true;
         Scanner scanner = new Scanner(System.in);
