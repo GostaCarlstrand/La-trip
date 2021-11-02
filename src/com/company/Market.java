@@ -32,9 +32,7 @@ public class Market extends Location {
         taxiCost = 45;
         activities = new String[]{alsBrandName, franksBrandName, "Leave"};
         this.menu = menu;
-
     }
-
     public void marketActivities () {
         Location.welcomeToLocation(name, description);
         menu.displayLocationMenu(activities);
@@ -43,37 +41,26 @@ public class Market extends Location {
         while (running) {
             if (menu.acceptedInputs(menuChoice, acceptedPhrasesAls)) {
                 welcomeToAlsFruit();
-                running = false;
                 break;
             } else if (menu.acceptedInputs(menuChoice, acceptedPhrasesFranks)){
                 welcomeToFranksLiquor();
-                running = false;
                 break;
             } else if (menu.acceptedInputs(menuChoice, menu.acceptedExitPhrases)){
-                running = false;
                 break;
             }
         }
     }
-
-
-
-
-
     private void welcomeToFranksLiquor(){
         menu.welcomeToVenueMessage(franksBrandName);
         purchase.displayProducts(franksProductInStock);
         purchase.addProductToCart(franksProductInStock, franksBrandName);
-
     }
     private void welcomeToAlsFruit(){
         menu.welcomeToVenueMessage(alsBrandName);
         purchase.displayProducts(alsProductInStock);
         purchase.addProductToCart(alsProductInStock, alsBrandName);
     }
-
     public void addPurchase(Purchase purchase) {
         this.purchase = purchase;
     }
-
 }

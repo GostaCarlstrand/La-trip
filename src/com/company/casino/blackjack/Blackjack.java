@@ -1,6 +1,4 @@
 package com.company.casino.blackjack;
-
-
 import com.company.Character;
 import com.company.Menu;
 
@@ -20,7 +18,6 @@ public class Blackjack {
         this.character = character;
         this.menu = menu;
     }
-
     public void initGame() {
         bet = 0;
         count = 3;
@@ -43,9 +40,8 @@ public class Blackjack {
             System.out.println("You have " + character.getWalletBalance());
             System.out.print("How much are you willing to bet?: ");
             bet = blackjackmenu.placeBet();
-            if (!character.checkCharacterHasMoney(character.getWalletBalance(), bet)) {
+            if (!character.checkCharacterHasMoney(bet)) {
                 System.out.println("You do not have money enough to place that bet");
-                blackjackRunning = quitGame();
                 break;
             }
             character.reduceWalletBalance(bet);
@@ -53,18 +49,16 @@ public class Blackjack {
             gamePlaying();
             displayGameResult();
             wantToPlayAgain();
+            break;
         }
-
     }
     public void returnBet() {
         System.out.println("This is how much you win: "+ (bet*2) + " dollars");
         character.increaseWalletBalance((bet*2)); //If game is a win, 2x bet is repaid
     }
-
     public void returnMoney(){
         character.increaseWalletBalance(bet); //If game is draw, bet is repaid
     }
-
     public void dealStartHand() {
         player.currentHand.add(deck.sortedDeckOfCards.get(0));
         dealer.currentHand.add(deck.sortedDeckOfCards.get(1));
@@ -72,7 +66,6 @@ public class Blackjack {
         player.currentHandValue = player.currentHand.get(0).value + player.currentHand.get(1).value;
         dealer.currentHandValue = dealer.currentHand.get(0).value;
     }
-
     public void dealAnotherCard(Player player) {
         player.currentHand.add(deck.sortedDeckOfCards.get(count));  //Take next card from deck
         player.currentHandValue += deck.sortedDeckOfCards.get(count).value;
@@ -81,7 +74,6 @@ public class Blackjack {
         }
         count += 1;
     }
-
     public void compareHands() {
         if (dealer.currentHandValue > 21) {     //Has dealer busted
             hasPlayerWonTheGame = true;
@@ -104,11 +96,6 @@ public class Blackjack {
             returnBet();
         }
     }
-
-    public boolean quitGame() {
-        return false;
-    }
-
     public void playersTurn() {
         boolean playersTurn = true;
         while (playersTurn) {
@@ -120,7 +107,7 @@ public class Blackjack {
                 character.increaseWalletBalance(bet*2);
                 wantToPlayAgain();
             }
-            String menuChoice = menu.menuInput();
+            String menuChoice = blackjackmenu.menuInput();
             if (menuChoice.equalsIgnoreCase("Take")) {
                 dealAnotherCard(player);
                 System.out.println("Next card is: " + deck.sortedDeckOfCards.get(count-1).displayCard());
@@ -130,18 +117,15 @@ public class Blackjack {
                     wantToPlayAgain();
                 } else if (player.currentHandValue == 21) {
                     System.out.println("You got 21");
-                    playersTurn = false;
                     break;
                 }
             }
             else if (menuChoice.equalsIgnoreCase("Stop")) {
-                playersTurn = false;
                 break;
             }
             continue;
         }
     }
-
     public void dealersTurn() {
         System.out.println("Dealer has ");
         dealer.displayCurrentHand();
@@ -151,24 +135,18 @@ public class Blackjack {
             System.out.println("Next card is: " + deck.sortedDeckOfCards.get(count-1).displayCard());
             if (dealer.currentHandValue >= 17) {
                 System.out.println("Dealer stops at: " + dealer.currentHandValue);
-                dealerRunning = false;
                 break;
             }
-
         }
-
     }
-
     public void wantToPlayAgain() {
         String menuChoice = blackjackmenu.leaveGame();
         if (menuChoice.equalsIgnoreCase("yes")) {
             gameLoop();
         } else {
             System.out.println("Ok, thanks for playing Blackjack with me");
-            quitGame();
         }
     }
-
     public void gamePlaying() {
         playersTurn();
         dealersTurn();
