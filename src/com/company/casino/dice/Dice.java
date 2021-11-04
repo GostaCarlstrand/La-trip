@@ -33,33 +33,47 @@ public class Dice {
         character.reduceWalletBalance(bet);
     }
 
-    public void guessNumber() {
-        System.out.print("Which number on the dice?: ");
-        int inputNumberGuess = menu.menuIntInput();
+    public boolean guessNumber(int inputNumberGuess) {
         if (inputNumberGuess > diceSize) {
             System.out.println("Guess can't be larger than the dice");
-            guessNumber();
+            return false;
         }
         setGuessedNumber(inputNumberGuess);
+        return true;
     }
 
     private void diceGame() {
-        Random random = new Random();
-        int randomDiceNumber = random.nextInt(diceSize+1);
-        if (getGuessedNumber() != randomDiceNumber){
-            System.out.println("You lost");
-            if (GameMenu.playAgain().equalsIgnoreCase("yes")){
-                gameLoop();
+        while (true) {
+            Random random = new Random();
+            int randomDiceNumber = random.nextInt(1, 6);
+            if (getGuessedNumber() != randomDiceNumber) {
+                System.out.println("You lost, the correct number was " + randomDiceNumber);
+            } else {
+                System.out.println("You guessed the correct number");
+                GameMenu.repayBet(character.getWalletBalance(), bet);
             }
-        } else {
-            System.out.println("You guessed the correct number");
-            GameMenu.repayBet(character.getWalletBalance(), bet);
+            break;
         }
+    }
+    public boolean playAgain(String answer) {
+        if (answer.equalsIgnoreCase("yes")) {
+            return true;
+        }
+        return false;
     }
 
     public void gameLoop() {
+        while (true) {
         initDiceGame();
-        guessNumber();
+        boolean guessIsValid = false;
+        while(!guessIsValid){
+            System.out.print("Which number on the dice?: ");
+            guessIsValid =  guessNumber(menu.menuIntInput());
+        }
         diceGame();
+            if (!playAgain(GameMenu.playAgain())) {
+                break;
+            }
+        }
     }
 }

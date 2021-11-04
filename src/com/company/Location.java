@@ -9,7 +9,7 @@ public class Location {
     String [] acceptedMarketPhrases = {"market", "fruit market", "fruits", "fruit", "the market"};
     String [] acceptedCasinoPhrases = {"casino", "ceasar", "ceasar palace", "the casino", "palace", "ceasar casino"};
     String [] acceptedBeachPhrases = {"long beach", "beach", "swim", "the beach"};
-    String [] acceptedAirportPhrases = {"airport", "lax", "the airport", "home"};
+    String [] acceptedAirportPhrases = {"airport", "lax", "the airport", "home", "leave"};
 
     public String getName() {
         return name;
